@@ -108,8 +108,6 @@ WORKDIR /home/stor2rrd
 RUN tar xvf stor2rrd-$STOR_VER.tar
 
 COPY supervisord.conf /etc/
-COPY startup.sh /startup.sh
-RUN chmod +x /startup.sh
 
 RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
