@@ -52,6 +52,12 @@ RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing sbli
 # install perl PDF API from CPAN
 RUN cpanm -l /usr -n PDF::API2
 
+# configure Apache
+COPY configs/apache2 /etc/apache2/sites-available
+COPY configs/apache2/htpasswd /etc/apache2/conf/
+
+# change apache user to lpar2rrd
+RUN sed -i 's/^User apache/User lpar2rrd/g' /etc/apache2/httpd.conf
 
 # setup default user
 RUN addgroup -S lpar2rrd 
@@ -64,13 +70,6 @@ RUN mkdir /home/stor2rrd \
     && chown lpar2rrd /home/lpar2rrd/stor2rrd
     
 USER lpar2rrd
-
-# configure Apache
-COPY configs/apache2 /etc/apache2/sites-available
-COPY configs/apache2/htpasswd /etc/apache2/conf/
-
-# change apache user to lpar2rrd
-RUN sed -i 's/^User apache/User lpar2rrd/g' /etc/apache2/httpd.conf
 
 # adding web root
 ADD htdocs.tar.gz /var/www/localhost
