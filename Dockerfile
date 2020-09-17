@@ -124,8 +124,8 @@ RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
 VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
 
-WORKDIR /home/lpar2rrd/
-RUN main_config.sh
+#WORKDIR /home/lpar2rrd/
+#RUN main_config.sh
 
 USER lpar2rrd
 
