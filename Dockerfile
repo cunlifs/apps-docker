@@ -55,7 +55,7 @@ RUN mkdir /home/stor2rrd \
     && ln -s /home/lpar2rrd/stor2rrd /home/stor2rrd \
     && chown lpar2rrd /home/lpar2rrd/stor2rrd
     
-USER lpar2dd
+USER lpar2rrd
 
 # expose ports for SSH, HTTP, HTTPS and LPAR2RRD daemon
 EXPOSE 22 80 443 8162
