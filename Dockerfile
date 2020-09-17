@@ -57,6 +57,9 @@ RUN apk update && apk add \
     perl-dev \
     perl-app-cpanminus
 
+# expose ports for SSH, HTTP, HTTPS and LPAR2RRD daemon
+EXPOSE 22 80 443 8162
+
 COPY small_startup.sh /startup.sh
 RUN chmod +x /startup.sh
 
