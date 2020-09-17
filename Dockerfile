@@ -107,16 +107,13 @@ WORKDIR /home/stor2rrd
 RUN tar xvf stor2rrd-$STOR_VER.tar
 
 COPY supervisord.conf /etc/
+COPY small_startup.sh /home/lpar2rrd/startup.sh
+RUN chmod +x /home/lpar2rrd/startup.sh \
+    && chown lpar2rrd /home/lpar2rrd/startup.sh
 
 RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
 VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
-
-
-
-COPY small_startup.sh /home/lpar2rrd/startup.sh
-RUN chmod +x /home/lpar2rrd/startup.sh \
-    && chown lpar2rrd /home/lpar2rrd/startup.sh
 
 USER lpar2rrd
 
