@@ -114,8 +114,8 @@ VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
 
 USER lpar2rrd
 
-COPY small_startup.sh /startup.sh
-RUN chmod +x /startup.sh
+COPY small_startup.sh /home/lpar2rrd/startup.sh
+RUN chmod +x /home/lpar2rrd/startup.sh
 
-ENTRYPOINT [ "/startup.sh" ]
+ENTRYPOINT [ "/home/lpar2rrd/startup.sh" ]
 
