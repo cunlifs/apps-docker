@@ -4,18 +4,6 @@
 
 FROM       alpine:latest
 
-# setup default user
-RUN addgroup -S lpar2rrd 
-RUN adduser -S lpar2rrd -G lpar2rrd -u 1005 -s /bin/bash
-RUN echo 'lpar2rrd:xorux4you' | chpasswd
-RUN echo '%lpar2rrd ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-RUN mkdir /home/stor2rrd \
-    && mkdir /home/lpar2rrd/stor2rrd \
-    && ln -s /home/lpar2rrd/stor2rrd /home/stor2rrd \
-    && chown lpar2rrd /home/lpar2rrd/stor2rrd
-    
-USER lpar2dd
-
 RUN apk update && apk add \
     bash \
     wget \
@@ -56,6 +44,18 @@ RUN apk update && apk add \
     make \
     perl-dev \
     perl-app-cpanminus
+
+# setup default user
+RUN addgroup -S lpar2rrd 
+RUN adduser -S lpar2rrd -G lpar2rrd -u 1005 -s /bin/bash
+RUN echo 'lpar2rrd:xorux4you' | chpasswd
+RUN echo '%lpar2rrd ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN mkdir /home/stor2rrd \
+    && mkdir /home/lpar2rrd/stor2rrd \
+    && ln -s /home/lpar2rrd/stor2rrd /home/stor2rrd \
+    && chown lpar2rrd /home/lpar2rrd/stor2rrd
+    
+USER lpar2dd
 
 # expose ports for SSH, HTTP, HTTPS and LPAR2RRD daemon
 EXPOSE 22 80 443 8162
