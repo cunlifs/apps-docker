@@ -59,6 +59,14 @@ COPY configs/apache2/htpasswd /etc/apache2/conf/
 # change apache user to lpar2rrd
 RUN sed -i 's/^User apache/User lpar2rrd/g' /etc/apache2/httpd.conf
 
+# adding web root
+ADD htdocs.tar.gz /var/www/localhost
+RUN chown -R apache.apache /var/www/localhost
+RUN chmod a+w /var/www/localhost/htdocs/js/env.js
+
+COPY tz.pl /var/www/localhost/cgi-bin/tz.pl
+RUN chmod +x /var/www/localhost/cgi-bin/tz.pl
+
 # setup default user
 RUN addgroup -S lpar2rrd 
 RUN adduser -S lpar2rrd -G lpar2rrd -u 1005 -s /bin/bash
@@ -71,11 +79,6 @@ RUN mkdir /home/stor2rrd \
     
 USER lpar2rrd
 
-# adding web root
-ADD htdocs.tar.gz /var/www/localhost
-RUN chown -R apache.apache /var/www/localhost
-RUN chmod a+w /var/www/localhost/htdocs/js/env.js
-
 # add product installations
 ENV LPAR_VER_MAJ "6.20"
 ENV LPAR_VER_MIN ""
@@ -86,12 +89,6 @@ ENV STOR_SF_DIR "2.81"
 
 ENV LPAR_VER "$LPAR_VER_MAJ$LPAR_VER_MIN"
 ENV STOR_VER "$STOR_VER_MAJ$STOR_VER_MIN"
-
-COPY configs/crontab /var/spool/cron/crontabs/lpar2rrd
-RUN chmod 640 /var/spool/cron/crontabs/lpar2rrd && chown lpar2rrd.cron /var/spool/cron/crontabs/lpar2rrd
-
-COPY tz.pl /var/www/localhost/cgi-bin/tz.pl
-RUN chmod +x /var/www/localhost/cgi-bin/tz.pl
 
 # download tarballs from SF
 # ADD http://downloads.sourceforge.net/project/lpar2rrd/lpar2rrd/$LPAR_SF_DIR/lpar2rrd-$LPAR_VER.tar /home/lpar2rrd/
