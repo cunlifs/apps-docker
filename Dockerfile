@@ -4,6 +4,12 @@
 
 FROM       alpine:latest
 
+ENV HOSTNAME XoruX
+ENV VI_IMAGE 1
+
+# create file to see if this is the firstrun when started
+RUN touch /firstrun
+
 RUN apk update && apk add \
     bash \
     wget \
@@ -108,12 +114,18 @@ RUN tar xvf stor2rrd-$STOR_VER.tar
 
 COPY supervisord.conf /etc/
 COPY small_startup.sh /home/lpar2rrd/startup.sh
+COPY main_config.sh /home/lpar2rrd/main_config.sh
 RUN chmod +x /home/lpar2rrd/startup.sh \
     && chown lpar2rrd /home/lpar2rrd/startup.sh
-
+RUN chmod +x /home/lpar2rrd/main_config.sh \
+    && chown lpar2rrd /home/lpar2rrd/main_config.sh
+    
 RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
 VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
+
+WORKDIR /home/lpar2rrd/
+RUN main_config.sh
 
 USER lpar2rrd
 
