@@ -112,10 +112,13 @@ RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
 VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
 
-USER lpar2rrd
+
 
 COPY small_startup.sh /home/lpar2rrd/startup.sh
-RUN chmod +x /home/lpar2rrd/startup.sh
+RUN chmod +x /home/lpar2rrd/startup.sh \
+    && chown lpar2rrd /home/lpar2rrd/startup.sh
+
+USER lpar2rrd
 
 ENTRYPOINT [ "/home/lpar2rrd/startup.sh" ]
 
