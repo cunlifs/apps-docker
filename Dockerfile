@@ -77,8 +77,6 @@ RUN mkdir /home/stor2rrd \
     && ln -s /home/lpar2rrd/stor2rrd /home/stor2rrd \
     && chown lpar2rrd /home/lpar2rrd/stor2rrd \
     && chown lpar2rrd /home/stor2rrd
-    
-USER lpar2rrd
 
 # add product installations
 ENV LPAR_VER_MAJ "6.20"
@@ -113,6 +111,8 @@ COPY supervisord.conf /etc/
 RUN mkdir -p /home/lpar2rrd/lpar2rrd /home/stor2rrd/stor2rrd
 RUN chown -R lpar2rrd /home/lpar2rrd /home/stor2rrd
 VOLUME [ "/home/lpar2rrd/lpar2rrd", "/home/stor2rrd/stor2rrd" ]
+
+USER lpar2rrd
 
 COPY small_startup.sh /startup.sh
 RUN chmod +x /startup.sh
