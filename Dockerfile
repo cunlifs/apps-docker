@@ -75,7 +75,8 @@ RUN echo '%lpar2rrd ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir /home/stor2rrd \
     && mkdir /home/lpar2rrd/stor2rrd \
     && ln -s /home/lpar2rrd/stor2rrd /home/stor2rrd \
-    && chown lpar2rrd /home/lpar2rrd/stor2rrd
+    && chown lpar2rrd /home/lpar2rrd/stor2rrd \
+    && chown lpar2rrd /home/stor2rrd
     
 USER lpar2rrd
 
